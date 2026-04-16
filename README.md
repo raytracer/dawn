@@ -34,7 +34,7 @@ Dawn is designed for low-latency, distraction free writing.
 Dawn separates the engine from the platform layer. The core handles text editing, markdown parsing, and rendering. The platform layer (`platform.h`) provides I/O, making it straightforward to port to different environments.
 
 Current targets:
-- **Terminal** (primary) - POSIX terminals with optional Kitty graphics/text sizing
+- **Terminal** (primary) - POSIX terminals with optional Kitty-compatible graphics and text sizing where supported (Ghostty supports images; Kitty supports images and text sizing)
 - **Web** (experimental) - Canvas-based rendering via Emscripten
 
 The architecture makes adding new frontends relatively simple. Implement the platform API, and the engine handles everything else.

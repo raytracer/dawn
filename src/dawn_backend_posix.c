@@ -423,6 +423,19 @@ static bool query_text_sizing(void)
     return (row1 == row2 && row2 == row3 && col2 - col1 == 2 && col3 - col2 == 2);
 }
 
+static bool posix_terminal_is_ghostty(void)
+{
+    const char* term_program = getenv("TERM_PROGRAM");
+    if (term_program && strcmp(term_program, "ghostty") == 0)
+        return true;
+
+    const char* term = getenv("TERM");
+    if (term && strstr(term, "ghostty") != NULL)
+        return true;
+
+    return false;
+}
+
 static void detect_capabilities(void)
 {
     posix_state.capabilities = DAWN_CAP_NONE;
@@ -449,7 +462,9 @@ static void detect_capabilities(void)
         posix_state.capabilities |= DAWN_CAP_IMAGES;
     }
 
-    if (query_text_sizing()) {
+    // Ghostty implements Kitty graphics, but its 1.3.0 release notes state
+    // that OSC 66 text sizing is only parsed and "not implemented in the GUI yet".
+    if (!posix_terminal_is_ghostty() && query_text_sizing()) {
         posix_state.capabilities |= DAWN_CAP_TEXT_SIZING;
     }
 
