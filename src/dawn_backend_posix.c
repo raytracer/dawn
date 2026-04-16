@@ -1017,8 +1017,17 @@ static int32_t posix_read_key(void)
         tcsetattr(STDIN_FILENO, TCSANOW, &t);
 
         if (nread != 1) {
-            drain_escape_sequence();
-            return DAWN_KEY_NONE;
+            switch (seq[0]) {
+            case 'b':
+            case 'B':
+                return DAWN_KEY_ALT_LEFT;
+            case 'f':
+            case 'F':
+                return DAWN_KEY_ALT_RIGHT;
+            default:
+                drain_escape_sequence();
+                return DAWN_KEY_NONE;
+            }
         }
 
         if (seq[0] == '[') {
