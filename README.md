@@ -27,6 +27,11 @@ Dawn is a lightweight document drafter that runs in your terminal. It renders ma
 
 Dawn is designed for low-latency, distraction free writing. 
 
+This is a fork of https://github.com/andrewmd5/dawn that includes these extra features:
+
+- Word navigation with Option + Left/Right on the Mac
+- Image rendering for the ghostty terminal
+
 ---
 
 ## Portability
